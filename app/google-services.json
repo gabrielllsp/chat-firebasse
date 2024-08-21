@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "88102735260",
+    "firebase_url": "https://chat-firebase-24ee0-default-rtdb.firebaseio.com",
+    "project_id": "chat-firebase-24ee0",
+    "storage_bucket": "chat-firebase-24ee0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88102735260:android:5596de37869276fd8c8c59",
+        "android_client_info": {
+          "package_name": "com.pedromoura.chatfirebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIc3QVQb7ia1vcxA9ha8Y1C40r5I_em38"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
