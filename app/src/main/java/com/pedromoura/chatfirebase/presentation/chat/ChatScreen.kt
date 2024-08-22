@@ -89,7 +89,8 @@ fun ChatItem(message: Message) {
             message.text?.let {
                 Text(
                     text = it,
-                    color = Color.White
+                    color = Color.White,
+                    modifier = Modifier.padding(start = 8.dp, end = 8.dp)
                 )
             }
         }
@@ -97,7 +98,6 @@ fun ChatItem(message: Message) {
         if(message.senderId == "1") {
             Spacer(modifier = Modifier.weight(1f))
         }
-
     }
 }
 
