@@ -34,44 +34,43 @@ import com.pedromoura.chatfirebase.ui.theme.ChatFirebaseTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(
-    modifier: Modifier = Modifier,
-    loginScreenViewModel: LoginScreenViewModel = viewModel(
-        factory = LoginViewModelFactory(
-            LocalContext.current
-        )
-    ), navController: NavController
-) {
-    var userName by remember { mutableStateOf("") }
+fun LoginScreen(loginViewModel: LoginViewModel = viewModel(factory = LoginViewModelFactory(
+    LocalContext.current)), navController: NavController) {
+    var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
+    Column (
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
     ) {
         Text(
             text = "Tela de Login",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            modifier = modifier.padding(bottom = 50.dp)
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 50.dp)
         )
+
         OutlinedTextField(
-            value = userName,
-            onValueChange = { userName = it },
+            value = username,
+            onValueChange = { username = it },
             label = {
                 Text(
                     text = "Usuário",
-                    modifier = modifier,
+                    modifier = Modifier
+                        .padding(bottom = 8.dp),
                     textAlign = TextAlign.Start
                 )
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                .padding(bottom = 16.dp)
         )
 
         OutlinedTextField(
@@ -80,35 +79,33 @@ fun LoginScreen(
             label = {
                 Text(
                     text = "Senha",
-                    modifier = modifier,
+                    modifier = Modifier
+                        .padding(bottom = 8.dp),
                     textAlign = TextAlign.Start
                 )
             },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(bottom = 16.dp)
         )
-        Button(modifier = modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 56.dp, bottom = 8.dp)
-            .height(50.dp),
+
+        Button(
             onClick = {
-                loginScreenViewModel.saveLoginCredentials(userName, password)
-                Screen.Chat.route
+                loginViewModel.saveCredentials(username, password)
+                navController.navigate(Screen.Chat.route)
             }) {
-            Text(text = "Login")
+            Text("Login")
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-private fun LoginScreenPreview() {
-    ChatFirebaseTheme {
-        LoginScreen(
-            navController = rememberNavController()
-        )
-    }
+fun PreviewLogin() {
+    val navController = rememberNavController()
+    val fakeViewModel: LoginViewModel = viewModel(factory = LoginViewModelFactory(
+        LocalContext.current))
+    LoginScreen(fakeViewModel, navController)
 }

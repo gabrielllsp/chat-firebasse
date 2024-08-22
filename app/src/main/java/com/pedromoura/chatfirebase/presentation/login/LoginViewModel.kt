@@ -7,17 +7,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class LoginScreenViewModel(private val context: Context) : ViewModel() {
+class LoginViewModel(private val context: Context) : ViewModel() {
 
-    private val sharedPreferences: SharedPreferences =
-        context.getSharedPreferences("login_prefs", Context.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences = context.getSharedPreferences("login_prefs", Context.MODE_PRIVATE)
 
     var userId: String = ""
-    var username: String = ""
+    var username:  String = ""
     var password: String = ""
 
-    fun saveLoginCredentials(username: String, password: String) {
-        userId = if (username == "userone") {
+    fun saveCredentials(username: String, password: String) {
+        userId = if(username == "userone") {
             "1"
         } else {
             "2"
@@ -25,9 +24,9 @@ class LoginScreenViewModel(private val context: Context) : ViewModel() {
 
         viewModelScope.launch {
             with(sharedPreferences.edit()) {
-                putString("userId", userId)
-                putString("username", username)
-                putString("password", password)
+                putString("USERID", userId)
+                putString("USERNAME", username)
+                putString("PASSWORD", password)
                 apply()
             }
         }
@@ -36,9 +35,9 @@ class LoginScreenViewModel(private val context: Context) : ViewModel() {
 
 class LoginViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LoginScreenViewModel::class.java)) {
-            return LoginScreenViewModel(context) as T
+        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+            return LoginViewModel(context) as T
         }
-        throw IllegalArgumentException("ViewModel")
+        throw IllegalArgumentException("Viewmodel Class Desconhecido")
     }
 }

@@ -19,67 +19,65 @@ import java.util.UUID
 
 class ChatViewModel(
     private val database: FirebaseDatabase,
-    private val context: Context
-) : ViewModel() {
-
-
+    private val context: Context) : ViewModel()
+{
     private val _messages = MutableStateFlow<List<Message>>(emptyList())
-    val message: StateFlow<List<Message>> = _messages
-    private val sharedPreferences: SharedPreferences =
-        context.getSharedPreferences("login_prefs", Context.MODE_PRIVATE)
-
+    val messages: StateFlow<List<Message>> = _messages
+    private val sharedPreferences: SharedPreferences = context.getSharedPreferences("login_prefs", Context.MODE_PRIVATE)
     var messageText by mutableStateOf("")
         private set
 
     var username: String = ""
+    var password: String = ""
     var userId: String = ""
-    var password = ""
 
     init {
         val messageRef = database.reference.child("messages")
 
-        messageRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+        messageRef.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val messagesList = mutableListOf<Message>()
-                snapshot.children.forEach { child ->
+                dataSnapshot.children.forEach { child ->
                     val message = child.getValue(Message::class.java)
-                    message?.let {
-                        messagesList.add(it)
-                    }
-                    _messages.value = messagesList
+                    message?.let { messagesList.add(it) }
                 }
+
+                _messages.value = messagesList
             }
 
             override fun onCancelled(error: DatabaseError) {
-                //
+                // Tratar os erros
             }
 
         })
     }
 
-    fun onMessageTextChange(text: String) {
+    fun onMessageTextChanged(text: String) {
         messageText = text
     }
 
     fun sendMessage() {
         viewModelScope.launch {
-            userId = sharedPreferences.getString("userId", "") ?: ""
-            username = sharedPreferences.getString("username", "") ?: ""
-            password = sharedPreferences.getString("password", "") ?: ""
+            username = sharedPreferences.getString("USERNAME", "") ?: ""
+            password = sharedPreferences.getString("PASSWORD", "") ?: ""
+            userId = sharedPreferences.getString("USERID", "") ?: ""
         }
+
         val newMessage = Message(
             UUID.randomUUID().toString(),
             messageText,
             userId ?: "",
-            System.currentTimeMillis() / 1000
+            System.currentTimeMillis() / 1000L //timestamp em segundos
         )
+
         database.reference.child("messages").push().setValue(newMessage)
-            .addOnSuccessListener { // Depois que a message foi salva a gente pode tratar
+            .addOnSuccessListener {
+                //Depois que a message foi salva a gente pode tratar
             }
             .addOnFailureListener {
-                //tratar o erro
+                // Tratamento de Falhas
             }
-        messageText = ""
 
+        messageText = ""
     }
 }
