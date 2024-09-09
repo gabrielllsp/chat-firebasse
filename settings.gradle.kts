@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Chat Firebase"
 include(":app")
- 
+include(":authentication")

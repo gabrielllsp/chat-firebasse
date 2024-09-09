@@ -9,8 +9,8 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.database.FirebaseDatabase
 import com.pedromoura.chatfirebase.presentation.chat.ChatScreen
 import com.pedromoura.chatfirebase.presentation.chat.ChatViewModel
-import com.pedromoura.chatfirebase.presentation.login.LoginScreen
-import com.pedromoura.chatfirebase.presentation.login.LoginViewModel
+import com.gabriel.authentication.login.LoginScreen
+import com.gabriel.authentication.login.LoginViewModel
 
 sealed class Screen(val route: String) {
 

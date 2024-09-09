@@ -1,10 +1,9 @@
-package com.pedromoura.chatfirebase.presentation.login
+package com.gabriel.authentication.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -29,17 +28,21 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.pedromoura.chatfirebase.presentation.navigation.Screen
-import com.pedromoura.chatfirebase.ui.theme.ChatFirebaseTheme
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel = viewModel(factory = LoginViewModelFactory(
-    LocalContext.current)), navController: NavController) {
+fun LoginScreen(
+    loginViewModel: LoginViewModel = viewModel(
+        factory = LoginViewModelFactory(
+            LocalContext.current
+        )
+    ), navController: NavController
+) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    Column (
+    Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
@@ -105,7 +108,10 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel(factory = LoginViewMo
 @Composable
 fun PreviewLogin() {
     val navController = rememberNavController()
-    val fakeViewModel: LoginViewModel = viewModel(factory = LoginViewModelFactory(
-        LocalContext.current))
+    val fakeViewModel: LoginViewModel = viewModel(
+        factory = LoginViewModelFactory(
+            LocalContext.current
+        )
+    )
     LoginScreen(fakeViewModel, navController)
 }

@@ -1,4 +1,4 @@
-package com.pedromoura.chatfirebase.presentation.login
+package com.gabriel.authentication.login
 
 import android.content.Context
 import android.content.SharedPreferences
